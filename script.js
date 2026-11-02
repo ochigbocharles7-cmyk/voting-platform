@@ -20,7 +20,7 @@ function escapeHTML(value) {
 }
 
 // ===================================
-// LOAD CONTESTANTS BY CATEGORY
+// LOAD ACTIVE CONTESTANTS BY CATEGORY
 // ===================================
 
 async function loadContestants() {
@@ -39,6 +39,7 @@ async function loadContestants() {
     const { data, error } = await supabaseClient
         .from("contestants")
         .select("id, name, image_url, category")
+        .eq("is_active", true)
         .order("id", { ascending: true });
 
     if (error) {
@@ -112,20 +113,6 @@ async function loadContestants() {
         `;
     }).join("");
 
-    const unassigned = contestants.filter(
-        person => !categories.includes(person.category)
-    );
-
-    if (unassigned.length) {
-        container.insertAdjacentHTML("beforeend", `
-            <section style="margin-top:30px;">
-                <h2>Unassigned Contestants</h2>
-                <p>${unassigned.map(person =>
-                    escapeHTML(person.name)
-                ).join(", ")}</p>
-            </section>
-        `);
-    }
 }
 
 // ===================================
