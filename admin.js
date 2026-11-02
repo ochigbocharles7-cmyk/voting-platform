@@ -134,7 +134,9 @@ function displayPayments(payments) {
     `;
 }
 
+// ===================================
 // PAYMENT SEARCH
+// ===================================
 
 document.getElementById("paymentSearch").addEventListener("input", event => {
 
@@ -291,7 +293,7 @@ async function loadAdminContestants() {
 
     const { data, error } = await supabaseClient
         .from("contestants")
-        .select("id, name, category, image_url, vote_count")
+        .select("id, name, category, image_url, vote_count, is_active")
         .order("id", { ascending: true });
 
     if (error) {
@@ -305,44 +307,102 @@ async function loadAdminContestants() {
     }
 
     document.getElementById("adminContestants").innerHTML =
-        data.map(person => `
-            <div class="contestant">
+        data.map(person => {
 
-                <h3>${escapeHTML(person.name)}</h3>
+            const isActive = person.is_active !== false;
 
-                <p><strong>Category:</strong>
-                    ${escapeHTML(person.category || "Not assigned")}
-                </p>
+            return `
+                <div class="contestant">
 
-                <p>${Number(person.vote_count || 0).toLocaleString("en-NG")} votes</p>
+                    <h3>${escapeHTML(person.name)}</h3>
 
-                ${person.image_url ? `
-                    <img
-                        src="${escapeHTML(person.image_url)}"
-                        alt="${escapeHTML(person.name)}"
-                        style="width:100px;height:100px;object-fit:cover;border-radius:8px;"
-                    >
-                ` : ""}
+                    <p><strong>Category:</strong>
+                        ${escapeHTML(person.category || "Not assigned")}
+                    </p>
 
-                <div style="margin-top:15px;">
+                    <p>
+                        <strong>Status:</strong>
+                        <span style="color:${isActive ? "#16803c" : "#b3261e"};">
+                            ${isActive ? "ACTIVE" : "INACTIVE"}
+                        </span>
+                    </p>
 
-                    <button type="button"
-                        onclick="editContestant(${Number(person.id)})">
-                        Edit
-                    </button>
+                    <p>
+                        ${Number(person.vote_count || 0).toLocaleString("en-NG")}
+                        votes
+                    </p>
 
-                    <button type="button"
-                        onclick="deleteContestant(${Number(person.id)})"
-                        style="background:#b3261e;color:white;">
-                        Delete
-                    </button>
+                    ${person.image_url ? `
+                        <img
+                            src="${escapeHTML(person.image_url)}"
+                            alt="${escapeHTML(person.name)}"
+                            style="width:100px;height:100px;object-fit:cover;border-radius:8px;"
+                        >
+                    ` : ""}
+
+                    <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
+
+                        <button type="button"
+                            onclick="editContestant(${Number(person.id)})">
+                            Edit
+                        </button>
+
+                        <button type="button"
+                            onclick="toggleContestantStatus(${Number(person.id)}, ${isActive})"
+                            style="background:${isActive ? "#b3261e" : "#16803c"};color:white;">
+                            ${isActive ? "Deactivate" : "Activate"}
+                        </button>
+
+                    </div>
 
                 </div>
-
-            </div>
-        `).join("") || "No contestants registered.";
+            `;
+        }).join("") || "No contestants registered.";
 
 }
+
+// ===================================
+// ACTIVATE / DEACTIVATE CONTESTANT
+// ===================================
+
+window.toggleContestantStatus = async function(id, currentStatus) {
+
+    const newStatus = !currentStatus;
+
+    const action = newStatus ? "activate" : "deactivate";
+
+    const confirmed = confirm(
+        `Are you sure you want to ${action} this contestant?`
+    );
+
+    if (!confirmed) return;
+
+    try {
+
+        const { error } = await supabaseClient
+            .from("contestants")
+            .update({ is_active: newStatus })
+            .eq("id", id);
+
+        if (error) throw error;
+
+        alert(
+            newStatus
+                ? "Contestant activated successfully."
+                : "Contestant deactivated successfully."
+        );
+
+        await loadDashboard();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message || "Unable to update contestant status.");
+
+    }
+
+};
 
 // ===================================
 // ADD OR UPDATE CONTESTANT
@@ -503,42 +563,6 @@ window.editContestant = async function(id) {
     contestantForm.scrollIntoView({
         behavior: "smooth"
     });
-
-};
-
-// ===================================
-// DELETE CONTESTANT
-// ===================================
-
-window.deleteContestant = async function(id) {
-
-    const confirmed = confirm(
-        "Are you sure you want to delete this contestant?"
-    );
-
-    if (!confirmed) return;
-
-    const { error } = await supabaseClient
-        .from("contestants")
-        .delete()
-        .eq("id", id);
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to delete contestant. Existing payment records may depend on this contestant."
-        );
-
-        return;
-    }
-
-    alert("Contestant deleted successfully.");
-
-    resetContestantForm();
-
-    await loadDashboard();
 
 };
 
