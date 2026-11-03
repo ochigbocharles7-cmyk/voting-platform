@@ -316,56 +316,140 @@ body {
 }
 
 /* ==========================================
-   CONTESTANTS
+   CONTESTANTS - CATEGORY LAYOUT
 ========================================== */
 
 #contestants {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
-    gap: 25px;
+    display: block;
+    width: 100%;
 }
 
-.contestant {
+/* CATEGORY SECTION */
+
+.category-section {
+    margin: 0 0 60px !important;
+    padding: 30px;
+    border: 1px solid rgba(216,180,90,.17);
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at top right, rgba(216,180,90,.07), transparent 40%),
+        linear-gradient(145deg, #171d18, #0e120f);
+    box-shadow: 0 15px 40px rgba(0,0,0,.22);
+}
+
+/* CATEGORY HEADING */
+
+.category-section > h2 {
+    color: var(--gold-light) !important;
+    text-align: left !important;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin: 0 0 25px !important;
+    padding: 0 0 15px;
+    border-bottom: 1px solid rgba(216,180,90,.25);
+}
+
+.category-section > h2::before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 22px;
+    margin-right: 12px;
+    vertical-align: middle;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, #f4d88b, #a77b36);
+}
+
+/* CONTESTANT GRID */
+
+.category-contestants {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    justify-content: stretch !important;
+    align-items: stretch;
+    gap: 22px !important;
+}
+
+/* CONTESTANT CARD */
+
+.category-contestants .contestant {
+    min-width: 0;
+    padding: 14px 14px 20px;
+    overflow: hidden;
+    border: 1px solid rgba(216,180,90,.19);
+    border-radius: 15px;
     background: linear-gradient(145deg, #202720, #111512);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 30px 24px;
     text-align: center;
-    transition: .35s;
-    box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    transition: .3s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
 }
 
-.contestant:hover {
-    transform: translateY(-8px);
+.category-contestants .contestant:hover {
+    transform: translateY(-7px);
     border-color: var(--gold);
-    box-shadow: 0 15px 35px rgba(185,139,57,.15);
+    box-shadow: 0 15px 35px rgba(185,139,57,.16);
 }
 
-.contestant h3 {
+/* CONTESTANT IMAGE */
+
+.category-contestants .contestant img {
+    display: block;
+    width: 100%;
+    max-width: none !important;
+    height: 230px !important;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px !important;
+    margin: 0 auto 16px;
+    background: #252820;
+}
+
+/* CONTESTANT NAME */
+
+.category-contestants .contestant h3 {
     color: white;
-    font-size: 20px;
-    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    overflow-wrap: anywhere;
 }
 
-.contestant p {
+/* CONTESTANT DESCRIPTION */
+
+.category-contestants .contestant p {
     color: var(--gold-light);
-    margin-bottom: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
 }
 
-.contestant button {
-    background: linear-gradient(135deg, #b88a38, #f4d88b);
-    color: #17130a;
+/* VOTE BUTTON */
+
+.category-contestants .contestant .vote-button {
+    width: 100%;
+    padding: 12px 15px;
     border: none;
     border-radius: 7px;
-    padding: 13px 25px;
-    font-weight: bold;
+    background: linear-gradient(135deg, #b88a38, #f4d88b);
+    color: #17130a;
+    font-size: 12px;
+    font-weight: 800;
     cursor: pointer;
-    transition: .3s;
+    transition: .25s;
 }
 
-.contestant button:hover {
+.category-contestants .contestant .vote-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 18px rgba(216,180,90,.2);
+    box-shadow: 0 6px 18px rgba(216,180,90,.22);
+}
+
+/* EMPTY CATEGORY MESSAGE */
+
+.category-contestants > p {
+    grid-column: 1 / -1;
+    color: #a8aaa5;
+    font-size: 13px;
+    padding: 20px 0;
 }
 
 /* ==========================================
@@ -959,7 +1043,6 @@ body {
     color: #777d75;
 }
 
-/* Keep the payment search visible */
 .admin-search-wrapper #paymentSearch {
     display: block;
     margin: 0;
@@ -990,6 +1073,22 @@ body {
    RESPONSIVENESS
 ========================================== */
 
+@media(max-width:1100px) {
+    .category-contestants {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+}
+
+@media(max-width:1000px) {
+    .admin-stats {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .admin-main {
+        width: 92%;
+    }
+}
+
 @media(max-width:850px) {
     .hero-section {
         grid-template-columns: 1fr;
@@ -1016,13 +1115,23 @@ body {
     }
 }
 
-@media(max-width:1000px) {
-    .admin-stats {
-        grid-template-columns: repeat(2,minmax(0,1fr));
+@media(max-width:750px) {
+    .category-section {
+        padding: 22px 17px;
+        margin-bottom: 40px !important;
     }
 
-    .admin-main {
-        width: 92%;
+    .category-contestants {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 15px !important;
+    }
+
+    .category-contestants .contestant img {
+        height: 190px !important;
+    }
+
+    .category-section > h2 {
+        font-size: 18px;
     }
 }
 
@@ -1072,10 +1181,6 @@ body {
     .how-it-works-section {
         width: 92%;
         margin: 70px auto;
-    }
-
-    #contestants {
-        grid-template-columns: 1fr;
     }
 
     .visual-card {
@@ -1162,6 +1267,38 @@ body {
     .admin-dashboard-footer {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+@media(max-width:420px) {
+    .category-section {
+        padding: 18px 12px;
+    }
+
+    .category-contestants {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 10px !important;
+    }
+
+    .category-contestants .contestant {
+        padding: 9px 8px 13px;
+    }
+
+    .category-contestants .contestant img {
+        height: 145px !important;
+    }
+
+    .category-contestants .contestant h3 {
+        font-size: 13px;
+    }
+
+    .category-contestants .contestant p {
+        font-size: 10px;
+    }
+
+    .category-contestants .contestant .vote-button {
+        padding: 10px 5px;
+        font-size: 11px;
     }
 }
 
