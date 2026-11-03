@@ -244,18 +244,25 @@ container.addEventListener("click", event => {
 
     if (!button) return;
 
+    // Reset previous voting session
+    document.getElementById("voteForm").reset();
+    document.getElementById("paymentResult").innerHTML = "";
+
+    const payButton = document.getElementById("payButton");
+    payButton.style.display = "block";
+    payButton.disabled = false;
+    payButton.textContent = "Pay Now";
+
     selectedContestantId = Number(button.dataset.id);
 
     document.getElementById("selectedContestant").textContent =
         "Voting for: " + button.dataset.name;
 
-    document.getElementById("paymentResult").innerHTML = "";
-
-    document.getElementById("voteModal").style.display = "flex";
+    modal.style.display = "flex";
 
 });
 // ===================================
-// CLOSE MODAL AND RESET VOTING FORM
+// CLOSE MODAL
 // ===================================
 
 document.getElementById("closeModal").addEventListener("click", () => {
@@ -263,7 +270,6 @@ document.getElementById("closeModal").addEventListener("click", () => {
     modal.style.display = "none";
 
     document.getElementById("voteForm").reset();
-
     document.getElementById("paymentResult").innerHTML = "";
 
     const payButton = document.getElementById("payButton");
