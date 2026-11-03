@@ -7,166 +7,331 @@
 
     <title>FEZOPRESTIGE | Admin Dashboard</title>
 
-    <meta name="theme-color" content="#090909">
+    <meta name="theme-color" content="#090c0b">
     <meta name="description" content="FEZOPRESTIGE secure administration portal.">
 
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
-<body>
+<body class="admin-page">
 
-<header>
-    <h1>FEZOPRESTIGE</h1>
-    <p>Secure Administration Portal</p>
-</header>
+    <!-- ADMIN HEADER -->
 
-<main>
+    <header class="admin-site-header">
+        <a href="#" class="admin-brand">
+            <div class="admin-brand-icon">F</div>
+            <div>
+                <h1>FEZO<span>PRESTIGE</span></h1>
+                <p>ADMINISTRATION PORTAL</p>
+            </div>
+        </a>
 
-    <section id="loginSection">
-        <div class="contestant">
-            <h2>Administrator Login</h2>
+        <div class="admin-header-label">
+            <span class="admin-status-dot"></span>
+            Secure Admin Access
+        </div>
+    </header>
 
-            <form id="loginForm">
 
-                <input
-                    type="email"
-                    id="adminEmail"
-                    placeholder="Admin Email"
-                    required
-                >
+    <main class="admin-main">
 
-                <input
-                    type="password"
-                    id="adminPassword"
-                    placeholder="Password"
-                    required
-                >
+        <!-- LOGIN -->
 
-                <button type="submit" id="loginButton">
-                    Login
+        <section id="loginSection" class="admin-login-section">
+
+            <div class="admin-login-card">
+
+                <div class="admin-login-icon">FP</div>
+
+                <p class="admin-eyebrow">WELCOME BACK</p>
+
+                <h2>Administrator Login</h2>
+
+                <p class="admin-subtitle">
+                    Sign in to manage your FEZOPRESTIGE voting platform.
+                </p>
+
+                <form id="loginForm">
+
+                    <label for="adminEmail">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="adminEmail"
+                        placeholder="Enter your admin email"
+                        required
+                    >
+
+                    <label for="adminPassword">Password</label>
+
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <button type="submit" id="loginButton">
+                        Sign In to Dashboard
+                    </button>
+
+                </form>
+
+                <p id="loginMessage"></p>
+
+                <div class="admin-login-footer">
+                    FEZOPRESTIGE · VOTE · SUPPORT · CELEBRATE
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard" style="display:none;">
+
+            <!-- DASHBOARD TOP BAR -->
+
+            <div class="admin-dashboard-top">
+
+                <div>
+                    <p class="admin-eyebrow">ADMINISTRATION</p>
+                    <h2>Dashboard Overview</h2>
+                    <p class="admin-subtitle">
+                        Monitor your voting platform and manage activities.
+                    </p>
+                </div>
+
+                <button type="button" id="logoutButton">
+                    <span>↗</span> Logout
                 </button>
 
-            </form>
-
-            <p id="loginMessage"></p>
-        </div>
-    </section>
-
-    <section id="dashboard" style="display:none;">
-
-        <div class="admin-heading">
-            <h2>Dashboard Overview</h2>
-            <button id="logoutButton">Logout</button>
-        </div>
-
-        <div class="admin-stats">
-
-            <div class="admin-card">
-                <p>Total Revenue</p>
-                <h3 id="totalRevenue">₦0</h3>
             </div>
 
-            <div class="admin-card">
-                <p>Total Votes</p>
-                <h3 id="totalVotes">0</h3>
+
+            <!-- STATISTICS -->
+
+            <div class="admin-section-heading">
+                <h3>Platform Statistics</h3>
+                <span>LIVE OVERVIEW</span>
             </div>
 
-            <div class="admin-card">
-                <p>Contestants</p>
-                <h3 id="totalContestants">0</h3>
+            <div class="admin-stats">
+
+                <div class="admin-card revenue-card">
+                    <div class="admin-card-top">
+                        <span>Total Revenue</span>
+                        <span class="admin-stat-icon">₦</span>
+                    </div>
+                    <h3 id="totalRevenue">₦0</h3>
+                    <p>Verified payment revenue</p>
+                </div>
+
+                <div class="admin-card">
+                    <div class="admin-card-top">
+                        <span>Total Votes</span>
+                        <span class="admin-stat-icon">✓</span>
+                    </div>
+                    <h3 id="totalVotes">0</h3>
+                    <p>Votes recorded</p>
+                </div>
+
+                <div class="admin-card">
+                    <div class="admin-card-top">
+                        <span>Contestants</span>
+                        <span class="admin-stat-icon">♙</span>
+                    </div>
+                    <h3 id="totalContestants">0</h3>
+                    <p>Registered contestants</p>
+                </div>
+
+                <div class="admin-card">
+                    <div class="admin-card-top">
+                        <span>Successful Payments</span>
+                        <span class="admin-stat-icon">₦</span>
+                    </div>
+                    <h3 id="successfulPayments">0</h3>
+                    <p>Confirmed transactions</p>
+                </div>
+
             </div>
 
-            <div class="admin-card">
-                <p>Successful Payments</p>
-                <h3 id="successfulPayments">0</h3>
-            </div>
 
-        </div>
+            <!-- CONTESTANT MANAGEMENT -->
 
-        <h2>Contestant Management</h2>
+            <section class="admin-content-section">
 
-        <div class="contestant">
+                <div class="admin-section-heading">
+                    <div>
+                        <p class="admin-eyebrow">PLATFORM MANAGEMENT</p>
+                        <h3>Contestant Management</h3>
+                    </div>
+                    <span class="admin-section-number">01</span>
+                </div>
 
-            <h3 id="contestantFormTitle">Add New Contestant</h3>
+                <div class="admin-panel">
 
-            <form id="contestantForm">
+                    <div class="admin-panel-heading">
+                        <div>
+                            <h3 id="contestantFormTitle">
+                                Add New Contestant
+                            </h3>
+                            <p>Register or update a contestant.</p>
+                        </div>
+                    </div>
 
-                <input type="hidden" id="contestantId">
+                    <form id="contestantForm" class="admin-form">
 
-                <input
-                    type="text"
-                    id="contestantName"
-                    placeholder="Enter contestant full name"
-                    required
-                >
+                        <input type="hidden" id="contestantId">
 
-                <label for="contestantCategory">
-                    Select Award Category
-                </label>
+                        <div class="admin-form-group">
+                            <label for="contestantName">
+                                Contestant Full Name
+                            </label>
 
-                <select id="contestantCategory" required>
-                    <option value="">Choose a category</option>
-                    <option value="KING OF FEZOTECH">KING OF FEZOTECH</option>
-                    <option value="QUEEN OF FEZOTECH">QUEEN OF FEZOTECH</option>
-                    <option value="MOST SOCIAL STAFF">MOST SOCIAL STAFF</option>
-                    <option value="MOST POPULAR">MOST POPULAR</option>
-                    <option value="MOST INFLUENTIAL">MOST INFLUENTIAL</option>
-                    <option value="MOST STYLISH">MOST STYLISH</option>
-                    <option value="MOST HANDSOME">MOST HANDSOME</option>
-                    <option value="MOST BEAUTIFUL">MOST BEAUTIFUL</option>
-                </select>
+                            <input
+                                type="text"
+                                id="contestantName"
+                                placeholder="Enter contestant full name"
+                                required
+                            >
+                        </div>
 
-                <label for="contestantPhoto">
-                    Upload Contestant Photo (Optional)
-                </label>
+                        <div class="admin-form-group">
+                            <label for="contestantCategory">
+                                Award Category
+                            </label>
 
-                <input
-                    type="file"
-                    id="contestantPhoto"
-                    accept="image/jpeg,image/png,image/webp"
-                >
+                            <select id="contestantCategory" required>
+                                <option value="">Choose a category</option>
+                                <option value="KING OF FEZOTECH">KING OF FEZOTECH</option>
+                                <option value="QUEEN OF FEZOTECH">QUEEN OF FEZOTECH</option>
+                                <option value="MOST SOCIAL STAFF">MOST SOCIAL STAFF</option>
+                                <option value="MOST POPULAR">MOST POPULAR</option>
+                                <option value="MOST INFLUENTIAL">MOST INFLUENTIAL</option>
+                                <option value="MOST STYLISH">MOST STYLISH</option>
+                                <option value="MOST HANDSOME">MOST HANDSOME</option>
+                                <option value="MOST BEAUTIFUL">MOST BEAUTIFUL</option>
+                            </select>
+                        </div>
 
-                <button type="submit" id="saveContestant">
-                    Add Contestant
-                </button>
+                        <div class="admin-form-group admin-photo-group">
+                            <label for="contestantPhoto">
+                                Contestant Photo
+                                <span>Optional</span>
+                            </label>
 
-                <button
-                    type="button"
-                    id="cancelEdit"
-                    style="display:none;"
-                >
-                    Cancel Edit
-                </button>
+                            <input
+                                type="file"
+                                id="contestantPhoto"
+                                accept="image/jpeg,image/png,image/webp"
+                            >
+                        </div>
 
-            </form>
-        </div>
+                        <div class="admin-form-actions">
+                            <button type="submit" id="saveContestant">
+                                Add Contestant
+                            </button>
 
-        <h2>Registered Contestants</h2>
+                            <button
+                                type="button"
+                                id="cancelEdit"
+                                style="display:none;"
+                            >
+                                Cancel Edit
+                            </button>
+                        </div>
 
-        <p>
-            Use the Activate and Deactivate buttons to control which
-            contestants appear on the public voting website.
-            Deactivation does not delete votes or payment records.
-        </p>
+                    </form>
 
-        <div id="adminContestants">Loading...</div>
+                </div>
 
-        <h2>Payment Records</h2>
 
-        <input
-            type="text"
-            id="paymentSearch"
-            placeholder="Search by voter name or payment reference..."
-        >
+                <div class="admin-panel contestant-list-panel">
 
-        <div id="paymentsTable"></div>
+                    <div class="admin-panel-heading">
+                        <div>
+                            <h3>Registered Contestants</h3>
+                            <p>
+                                Manage contestant visibility on the public website.
+                            </p>
+                        </div>
+                    </div>
 
-    </section>
+                    <div class="admin-information">
+                        <span>i</span>
+                        <p>
+                            Use the Activate and Deactivate buttons to control
+                            which contestants appear on the public voting website.
+                            Deactivation does not delete votes or payment records.
+                        </p>
+                    </div>
 
-</main>
+                    <div id="adminContestants">
+                        Loading...
+                    </div>
 
-<script src="admin.js"></script>
+                </div>
+
+            </section>
+
+
+            <!-- PAYMENT RECORDS -->
+
+            <section class="admin-content-section">
+
+                <div class="admin-section-heading">
+                    <div>
+                        <p class="admin-eyebrow">TRANSACTION MONITORING</p>
+                        <h3>Payment Records</h3>
+                    </div>
+                    <span class="admin-section-number">02</span>
+                </div>
+
+                <div class="admin-panel">
+
+                    <div class="admin-panel-heading">
+                        <div>
+                            <h3>Transaction History</h3>
+                            <p>Search and review payment records.</p>
+                        </div>
+                    </div>
+
+                    <div class="admin-search-wrapper">
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="paymentSearch"
+                            placeholder="Search by voter name or payment reference..."
+                        >
+                    </div>
+
+                    <div id="paymentsTable">
+                        Loading payment records...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+
+            <footer class="admin-dashboard-footer">
+                <p>© FEZOPRESTIGE. All rights reserved.</p>
+                <p>SECURE ADMINISTRATION PORTAL</p>
+            </footer>
+
+        </section>
+
+    </main>
+
+
+    <script src="admin.js"></script>
 
 </body>
 </html>
