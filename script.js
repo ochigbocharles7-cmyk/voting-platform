@@ -50,67 +50,117 @@ async function loadContestants() {
 
     const contestants = data || [];
 
-    container.innerHTML = categories.map(category => {
+    const populatedCategories = categories
+        .map(category => ({
+            name: category,
+            contestants: contestants.filter(
+                person => person.category === category
+            )
+        }))
+        .filter(group => group.contestants.length > 0);
 
-        const categoryContestants = contestants.filter(
-            person => person.category === category
-        );
+    if (populatedCategories.length === 0) {
+        container.innerHTML = `
+            <div class="contestants-empty">
+                <span>✦</span>
+                <h3>No Contestants Available Yet</h3>
+                <p>Please check back later for registered contestants.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = populatedCategories.map((group, index) => {
 
         return `
-            <section class="category-section"
-                style="margin-bottom:40px;">
+            <section class="category-section">
 
-                <h2 style="
-                    color:#d4af37;
-                    text-align:center;
-                    margin-bottom:20px;
-                ">
-                    ${escapeHTML(category)}
-                </h2>
+                <div class="category-heading">
 
-                <div class="category-contestants"
-                    style="
-                        display:flex;
-                        flex-wrap:wrap;
-                        justify-content:center;
-                        gap:20px;
-                    ">
+                    <div class="category-heading-main">
 
-                    ${categoryContestants.map(person => `
-                        <div class="contestant">
+                        <span class="category-number">
+                            ${String(index + 1).padStart(2, "0")}
+                        </span>
 
-                            ${person.image_url ? `
-                                <img
-                                    src="${escapeHTML(person.image_url)}"
-                                    alt="${escapeHTML(person.name)}"
-                                    style="
-                                        width:100%;
-                                        max-width:250px;
-                                        height:250px;
-                                        object-fit:cover;
-                                        border-radius:10px;
-                                    "
-                                >
-                            ` : ""}
-
-                            <h3>${escapeHTML(person.name)}</h3>
-
-                            <p>Support this contestant</p>
-
-                            <button class="vote-button"
-                                data-id="${person.id}"
-                                data-name="${escapeHTML(person.name)}">
-                                Vote Now
-                            </button>
-
+                        <div>
+                            <p class="category-eyebrow">AWARD CATEGORY</p>
+                            <h2>${escapeHTML(group.name)}</h2>
                         </div>
-                    `).join("") || `
-                        <p>No contestants registered in this category yet.</p>
-                    `}
+
+                    </div>
+
+                    <span class="category-count">
+                        ${group.contestants.length}
+                        ${group.contestants.length === 1 ? "CONTESTANT" : "CONTESTANTS"}
+                    </span>
 
                 </div>
+
+
+                <div class="category-contestants">
+
+                    ${group.contestants.map(person => {
+
+                        const initials = escapeHTML(
+                            person.name
+                                .trim()
+                                .split(/\s+/)
+                                .slice(0, 2)
+                                .map(part => part.charAt(0))
+                                .join("")
+                                .toUpperCase()
+                        );
+
+                        return `
+                            <article class="contestant">
+
+                                <div class="contestant-photo">
+
+                                    ${person.image_url ? `
+                                        <img
+                                            src="${escapeHTML(person.image_url)}"
+                                            alt="${escapeHTML(person.name)}"
+                                            loading="lazy"
+                                        >
+                                    ` : `
+                                        <div class="contestant-placeholder">
+                                            ${initials}
+                                        </div>
+                                    `}
+
+                                    <span class="contestant-photo-overlay"></span>
+
+                                </div>
+
+
+                                <div class="contestant-details">
+
+                                    <h3>${escapeHTML(person.name)}</h3>
+
+                                    <p>Support this contestant</p>
+
+                                    <button
+                                        class="vote-button"
+                                        data-id="${escapeHTML(person.id)}"
+                                        data-name="${escapeHTML(person.name)}"
+                                    >
+                                        Vote Now
+                                        <span>→</span>
+                                    </button>
+
+                                </div>
+
+                            </article>
+                        `;
+
+                    }).join("")}
+
+                </div>
+
             </section>
         `;
+
     }).join("");
 
 }
