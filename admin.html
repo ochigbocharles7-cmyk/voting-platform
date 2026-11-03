@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Voting Platform</title>
+
+    <title>FEZOPRESTIGE | Admin Dashboard</title>
+
+    <meta name="theme-color" content="#090909">
+    <meta name="description" content="FEZOPRESTIGE secure administration portal.">
+
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
 <header>
-    <h1>VOTING ADMIN</h1>
+    <h1>FEZOPRESTIGE</h1>
     <p>Secure Administration Portal</p>
 </header>
 
@@ -22,15 +28,25 @@
             <h2>Administrator Login</h2>
 
             <form id="loginForm">
-                <input type="email" id="adminEmail"
-                    placeholder="Admin Email" required>
 
-                <input type="password" id="adminPassword"
-                    placeholder="Password" required>
+                <input
+                    type="email"
+                    id="adminEmail"
+                    placeholder="Admin Email"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Password"
+                    required
+                >
 
                 <button type="submit" id="loginButton">
                     Login
                 </button>
+
             </form>
 
             <p id="loginMessage"></p>
@@ -71,9 +87,11 @@
         <h2>Contestant Management</h2>
 
         <div class="contestant">
+
             <h3 id="contestantFormTitle">Add New Contestant</h3>
 
             <form id="contestantForm">
+
                 <input type="hidden" id="contestantId">
 
                 <input
@@ -113,9 +131,14 @@
                     Add Contestant
                 </button>
 
-                <button type="button" id="cancelEdit" style="display:none;">
+                <button
+                    type="button"
+                    id="cancelEdit"
+                    style="display:none;"
+                >
                     Cancel Edit
                 </button>
+
             </form>
         </div>
 
@@ -134,7 +157,7 @@
         <input
             type="text"
             id="paymentSearch"
-            placeholder="Search payments..."
+            placeholder="Search by voter name or payment reference..."
         >
 
         <div id="paymentsTable"></div>
@@ -144,5 +167,6 @@
 </main>
 
 <script src="admin.js"></script>
+
 </body>
 </html>
