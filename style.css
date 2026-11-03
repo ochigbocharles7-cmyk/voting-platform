@@ -22,9 +22,33 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: var(--black);
-    color: var(--white);
+    background:
+        radial-gradient(
+            ellipse at 15% 15%,
+            rgba(139, 105, 35, 0.18),
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse at 85% 45%,
+            rgba(100, 70, 25, 0.14),
+            transparent 45%
+        ),
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(212, 175, 55, 0.09),
+            transparent 50%
+        ),
+        linear-gradient(
+            135deg,
+            #080b0c 0%,
+            #151716 45%,
+            #0b0c0b 100%
+        );
+
+    background-attachment: fixed;
+    color: #ffffff;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 /* HEADER */
