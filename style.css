@@ -1480,4 +1480,22 @@ tr:hover td {
     .admin-stats {
         grid-template-columns: 1fr;
     }
+   /* Reset older login container styling */
+#loginSection {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto 100px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+/* Keep payment search visible */
+.admin-search-wrapper #paymentSearch {
+    display: block;
+    margin: 0;
+    width: 100%;
+    background: transparent;
+    border: 0;
 }
