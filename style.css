@@ -31,52 +31,29 @@ body {
     color: var(--white);
     line-height: 1.6;
     min-height: 100vh;
-
     background:
-        radial-gradient(
-            ellipse at 12% 12%,
-            rgba(167,123,54,.20),
-            transparent 38%
-        ),
-        radial-gradient(
-            ellipse at 90% 35%,
-            rgba(126,91,37,.15),
-            transparent 40%
-        ),
-        radial-gradient(
-            ellipse at 50% 95%,
-            rgba(193,145,60,.12),
-            transparent 45%
-        ),
-        linear-gradient(
-            135deg,
-            #090c0b,
-            #171b18 50%,
-            #0a0d0c
-        );
-
+        radial-gradient(ellipse at 12% 12%, rgba(167,123,54,.20), transparent 38%),
+        radial-gradient(ellipse at 90% 35%, rgba(126,91,37,.15), transparent 40%),
+        radial-gradient(ellipse at 50% 95%, rgba(193,145,60,.12), transparent 45%),
+        linear-gradient(135deg, #090c0b, #171b18 50%, #0a0d0c);
     background-attachment: fixed;
 }
 
 /* ==========================================
-   HEADER
+   PUBLIC WEBSITE HEADER
 ========================================== */
 
 .site-header {
     width: 100%;
     min-height: 95px;
     padding: 18px 7%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 30px;
-
     background: rgba(9,12,11,.94);
     border-bottom: 1px solid var(--border);
-
     backdrop-filter: blur(15px);
-
     position: relative;
     z-index: 10;
 }
@@ -135,13 +112,7 @@ body {
     display: inline-block;
     padding: 13px 25px;
     border-radius: 6px;
-
-    background: linear-gradient(
-        135deg,
-        #b88a38,
-        #f2d78b
-    );
-
+    background: linear-gradient(135deg, #b88a38, #f2d78b);
     color: #17130a;
     font-weight: bold;
     font-size: 13px;
@@ -163,34 +134,19 @@ body {
     max-width: 1300px;
     width: 86%;
     min-height: 540px;
-
     margin: 65px auto 90px;
     padding: 65px 7%;
-
     display: grid;
     grid-template-columns: 1.2fr .8fr;
     align-items: center;
     gap: 50px;
-
     position: relative;
     overflow: hidden;
-
     border: 1px solid rgba(216,180,90,.25);
     border-radius: 24px;
-
     background:
-        radial-gradient(
-            circle at 80% 50%,
-            rgba(178,130,48,.24),
-            transparent 40%
-        ),
-        linear-gradient(
-            120deg,
-            #202720,
-            #101512 65%,
-            #2a2112
-        );
-
+        radial-gradient(circle at 80% 50%, rgba(178,130,48,.24), transparent 40%),
+        linear-gradient(120deg, #202720, #101512 65%, #2a2112);
     box-shadow: 0 25px 80px rgba(0,0,0,.4);
 }
 
@@ -217,14 +173,7 @@ body {
 
 .hero-content h2 span {
     display: block;
-
-    background: linear-gradient(
-        90deg,
-        #c19340,
-        #f8e4a5,
-        #b98b39
-    );
-
+    background: linear-gradient(90deg, #c19340, #f8e4a5, #b98b39);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -246,10 +195,8 @@ body {
 .secondary-button {
     display: inline-block;
     padding: 12px 24px;
-
     border: 1px solid rgba(216,180,90,.55);
     border-radius: 6px;
-
     color: var(--gold-light);
     text-decoration: none;
     font-size: 13px;
@@ -278,21 +225,17 @@ body {
 
 .hero-visual {
     min-height: 320px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     position: relative;
 }
 
 .hero-visual::before {
     content: "";
     position: absolute;
-
     width: 280px;
     height: 280px;
-
     background: rgba(196,151,65,.20);
     filter: blur(65px);
     border-radius: 50%;
@@ -301,23 +244,14 @@ body {
 .visual-card {
     width: 270px;
     height: 300px;
-
     border: 1px solid rgba(235,198,111,.5);
     border-radius: 22px;
-
-    background: linear-gradient(
-        145deg,
-        rgba(44,42,32,.96),
-        rgba(17,20,17,.96)
-    );
-
+    background: linear-gradient(145deg, rgba(44,42,32,.96), rgba(17,20,17,.96));
     box-shadow: 0 25px 60px rgba(0,0,0,.5);
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     position: relative;
     transform: rotate(3deg);
 }
@@ -325,25 +259,15 @@ body {
 .visual-icon {
     width: 85px;
     height: 85px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
-    background: linear-gradient(
-        135deg,
-        #a87b30,
-        #f3d98e
-    );
-
+    background: linear-gradient(135deg, #a87b30, #f3d98e);
     color: #17130a;
     font-size: 45px;
     font-weight: bold;
-
     margin-bottom: 25px;
-
     box-shadow: 0 0 35px rgba(216,180,90,.25);
 }
 
@@ -397,36 +321,24 @@ body {
 
 #contestants {
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(230px,1fr)
-    );
+    grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
     gap: 25px;
 }
 
 .contestant {
-    background: linear-gradient(
-        145deg,
-        #202720,
-        #111512
-    );
-
+    background: linear-gradient(145deg, #202720, #111512);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 30px 24px;
-
     text-align: center;
     transition: .35s;
-
     box-shadow: 0 12px 30px rgba(0,0,0,.25);
 }
 
 .contestant:hover {
     transform: translateY(-8px);
     border-color: var(--gold);
-
-    box-shadow:
-        0 15px 35px rgba(185,139,57,.15);
+    box-shadow: 0 15px 35px rgba(185,139,57,.15);
 }
 
 .contestant h3 {
@@ -441,16 +353,10 @@ body {
 }
 
 .contestant button {
-    background: linear-gradient(
-        135deg,
-        #b88a38,
-        #f4d88b
-    );
-
+    background: linear-gradient(135deg, #b88a38, #f4d88b);
     color: #17130a;
     border: none;
     border-radius: 7px;
-
     padding: 13px 25px;
     font-weight: bold;
     cursor: pointer;
@@ -474,16 +380,9 @@ body {
 
 .step-card {
     padding: 35px 28px;
-
     border-radius: 15px;
     border: 1px solid var(--border);
-
-    background: linear-gradient(
-        145deg,
-        #202720,
-        #111512
-    );
-
+    background: linear-gradient(145deg, #202720, #111512);
     transition: .3s;
 }
 
@@ -496,7 +395,6 @@ body {
     color: var(--gold);
     font-size: 35px;
     font-weight: bold;
-
     display: block;
     margin-bottom: 20px;
 }
@@ -513,16 +411,14 @@ body {
 }
 
 /* ==========================================
-   FOOTER
+   PUBLIC FOOTER
 ========================================== */
 
 .site-footer {
     padding: 35px 7%;
     margin-top: 100px;
-
     background: #090c0b;
     border-top: 1px solid var(--border);
-
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -536,288 +432,6 @@ body {
 
 /* ==========================================
    ADMIN DASHBOARD
-   SHARED CSS SUPPORT
-========================================== */
-
-#loginSection {
-    max-width: 420px;
-    margin: 65px auto;
-    padding: 30px;
-
-    background: linear-gradient(
-        145deg,
-        #202720,
-        #111512
-    );
-
-    border: 1px solid var(--border);
-    border-radius: 16px;
-
-    box-shadow: 0 10px 35px rgba(0,0,0,.4);
-}
-
-#loginForm input,
-#paymentSearch {
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-
-    background: #090c0b;
-    border: 1px solid #383838;
-    border-radius: 8px;
-
-    color: white;
-    outline: none;
-}
-
-#loginForm input:focus,
-#paymentSearch:focus {
-    border-color: var(--gold);
-
-    box-shadow:
-        0 0 0 2px rgba(212,175,55,.1);
-}
-
-#loginForm button,
-#logoutButton {
-    background: linear-gradient(
-        135deg,
-        #b88a38,
-        #f4d88b
-    );
-
-    color: #17130a;
-    border: none;
-    padding: 13px 20px;
-    border-radius: 7px;
-
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#loginForm button {
-    width: 100%;
-    margin-top: 12px;
-}
-
-.admin-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    gap: 15px;
-}
-
-.admin-stats {
-    display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(200px,1fr)
-    );
-
-    gap: 22px;
-    margin-bottom: 45px;
-}
-
-.admin-card {
-    background: linear-gradient(
-        145deg,
-        #202720,
-        #111512
-    );
-
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px;
-    transition: .3s;
-}
-
-.admin-card:hover {
-    border-color: var(--gold);
-    transform: translateY(-4px);
-}
-
-.admin-card p {
-    color: var(--muted);
-    margin-bottom: 12px;
-    font-size: 14px;
-}
-
-.admin-card h3 {
-    color: var(--gold-light);
-    font-size: 28px;
-}
-
-#dashboard > h2 {
-    margin: 35px 0 20px;
-    color: var(--gold);
-}
-
-/* ==========================================
-   ADMIN TABLES
-========================================== */
-
-.table-container {
-    overflow-x: auto;
-
-    background: #151a17;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 750px;
-}
-
-th,
-td {
-    padding: 16px;
-    border-bottom: 1px solid #303030;
-    text-align: left;
-}
-
-th {
-    color: var(--gold-light);
-    background: #1b211b;
-    font-size: 13px;
-    letter-spacing: .5px;
-}
-
-td {
-    color: #ddd;
-    font-size: 14px;
-}
-
-tr:hover td {
-    background: rgba(212,175,55,.035);
-}
-
-/* ==========================================
-   SCROLLBAR
-========================================== */
-
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #090c0b;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #8c7128;
-    border-radius: 10px;
-}
-
-/* ==========================================
-   RESPONSIVENESS
-========================================== */
-
-@media(max-width:850px) {
-
-    .hero-section {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 50px 7%;
-    }
-
-    .hero-description {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .hero-buttons,
-    .trust-points {
-        justify-content: center;
-    }
-
-    .hero-visual {
-        min-height: 280px;
-    }
-
-    .steps-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media(max-width:600px) {
-
-    .site-header {
-        padding: 18px 5%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 18px;
-    }
-
-    .brand img {
-        width: 48px;
-        height: 48px;
-    }
-
-    .brand-text h1 {
-        font-size: 19px;
-    }
-
-    .main-nav {
-        width: 100%;
-        justify-content: center;
-        gap: 25px;
-    }
-
-    .header-vote-button {
-        display: none;
-    }
-
-    .hero-section {
-        width: 92%;
-        margin: 30px auto 65px;
-        padding: 40px 22px;
-        border-radius: 17px;
-    }
-
-    .hero-content h2 {
-        font-size: 43px;
-    }
-
-    .hero-description {
-        font-size: 14px;
-    }
-
-    .contestants-section,
-    .how-it-works-section {
-        width: 92%;
-        margin: 70px auto;
-    }
-
-    #contestants {
-        grid-template-columns: 1fr;
-    }
-
-    .visual-card {
-        width: 230px;
-        height: 260px;
-    }
-
-    .site-footer {
-        justify-content: center;
-        text-align: center;
-        flex-direction: column;
-    }
-
-    .admin-heading {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .admin-card {
-        padding: 22px;
-    }
-   
-/* ==========================================
-   FEZOPRESTIGE ADMIN DASHBOARD
 ========================================== */
 
 .admin-page {
@@ -829,7 +443,7 @@ tr:hover td {
     background-attachment: fixed;
 }
 
-/* HEADER */
+/* ADMIN HEADER */
 
 .admin-site-header {
     width: 100%;
@@ -846,38 +460,14 @@ tr:hover td {
 .admin-brand {
     display: flex;
     align-items: center;
-    gap: 13px;
     text-decoration: none;
 }
 
-.admin-brand-icon {
-    width: 49px;
-    height: 49px;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    background: linear-gradient(135deg,#a77b36,#f4d88b);
-    color: #111;
-    font-size: 25px;
-    font-weight: 900;
-    box-shadow: 0 5px 20px rgba(216,180,90,.15);
-}
-
-.admin-brand h1 {
-    color: #d8b45a;
-    font-size: 21px;
-    letter-spacing: 2px;
-    line-height: 1.3;
-}
-
-.admin-brand h1 span {
-    color: #fff;
-}
-
-.admin-brand p {
-    color: #a8aaa5;
-    font-size: 9px;
-    letter-spacing: 2px;
+.admin-brand img {
+    width: 230px;
+    max-height: 75px;
+    object-fit: contain;
+    display: block;
 }
 
 .admin-header-label {
@@ -1294,6 +884,7 @@ tr:hover td {
     width: 100%;
     color: #d8d8d0;
     font-size: 13px;
+    overflow-x: auto;
 }
 
 #adminContestants button,
@@ -1368,15 +959,13 @@ tr:hover td {
     color: #777d75;
 }
 
-#paymentSearch {
-    display: none;
-}
-
-/* TABLE OVERFLOW */
-
-#adminContestants,
-#paymentsTable {
-    overflow-x: auto;
+/* Keep the payment search visible */
+.admin-search-wrapper #paymentSearch {
+    display: block;
+    margin: 0;
+    width: 100%;
+    background: transparent;
+    border: 0;
 }
 
 /* FOOTER */
@@ -1397,7 +986,35 @@ tr:hover td {
     letter-spacing: 1px;
 }
 
-/* RESPONSIVE */
+/* ==========================================
+   RESPONSIVENESS
+========================================== */
+
+@media(max-width:850px) {
+    .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 50px 7%;
+    }
+
+    .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons,
+    .trust-points {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        min-height: 280px;
+    }
+
+    .steps-container {
+        grid-template-columns: 1fr;
+    }
+}
 
 @media(max-width:1000px) {
     .admin-stats {
@@ -1409,13 +1026,85 @@ tr:hover td {
     }
 }
 
-@media(max-width:650px) {
+@media(max-width:600px) {
+    .site-header {
+        padding: 18px 5%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .brand img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .brand-text h1 {
+        font-size: 19px;
+    }
+
+    .main-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 25px;
+    }
+
+    .header-vote-button {
+        display: none;
+    }
+
+    .hero-section {
+        width: 92%;
+        margin: 30px auto 65px;
+        padding: 40px 22px;
+        border-radius: 17px;
+    }
+
+    .hero-content h2 {
+        font-size: 43px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .contestants-section,
+    .how-it-works-section {
+        width: 92%;
+        margin: 70px auto;
+    }
+
+    #contestants {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-card {
+        width: 230px;
+        height: 260px;
+    }
+
+    .site-footer {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .admin-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-card {
+        padding: 22px;
+    }
+
     .admin-site-header {
         padding: 15px 5%;
     }
 
-    .admin-brand h1 {
-        font-size: 17px;
+    .admin-brand img {
+        width: 185px;
+        max-height: 65px;
     }
 
     .admin-header-label {
@@ -1480,22 +1169,8 @@ tr:hover td {
     .admin-stats {
         grid-template-columns: 1fr;
     }
-   /* Reset older login container styling */
-#loginSection {
-    width: 100%;
-    max-width: none;
-    margin: 0 auto 100px;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
 }
 
-/* Keep payment search visible */
-.admin-search-wrapper #paymentSearch {
-    display: block;
-    margin: 0;
-    width: 100%;
-    background: transparent;
-    border: 0;
-}
+/* ==========================================
+   END OF FEZOPRESTIGE STYLES
+========================================== */
