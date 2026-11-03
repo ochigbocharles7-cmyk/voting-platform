@@ -7,14 +7,742 @@
 
     <title>FEZOPRESTIGE | Admin Dashboard</title>
 
-    <meta name="theme-color" content="#090c0b">
+    <meta name="theme-color" content="#090A0F">
     <meta name="description" content="FEZOPRESTIGE secure administration portal.">
 
-    <!-- FEZOPRESTIGE WEBSITE ICON -->
     <link rel="icon" type="image/jpeg" href="./fezoprestige-icon.png.jpg">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --black: #090A0F;
+            --surface: #11141D;
+            --surface-alt: #191D29;
+            --surface-light: #202534;
+            --gold: #E5C158;
+            --gold-light: #F3E5AB;
+            --gold-dark: #C5A038;
+            --text: #F5F5F5;
+            --muted: #9298A7;
+            --border: rgba(229,193,88,.16);
+            --green: #35C98B;
+            --red: #F16B75;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body.admin-page {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--black);
+            color: var(--text);
+            font-family: "Plus Jakarta Sans", Inter, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.admin-page button,
+        body.admin-page input,
+        body.admin-page select {
+            font: inherit;
+        }
+
+        body.admin-page button {
+            cursor: pointer;
+        }
+
+        .admin-page a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .admin-site-header {
+            min-height: 82px;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background: rgba(9,10,15,.94);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+        }
+
+        .admin-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-brand img {
+            width: 225px;
+            max-height: 65px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .admin-header-label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #D5D7DF;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 10px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .5px;
+        }
+
+        .admin-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px rgba(53,201,139,.7);
+        }
+
+        .admin-main {
+            width: min(1440px, 100%);
+            margin: auto;
+            padding: 42px 5%;
+        }
+
+        .admin-eyebrow {
+            margin: 0 0 9px;
+            color: var(--gold);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .admin-subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 8px 0 0;
+        }
+
+        /* LOGIN */
+
+        .admin-login-section {
+            min-height: calc(100vh - 170px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 0;
+        }
+
+        .admin-login-card {
+            width: min(460px, 100%);
+            background: linear-gradient(145deg, #151925, #0F1119);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 42px;
+            box-shadow: 0 25px 80px rgba(0,0,0,.35);
+        }
+
+        .admin-login-icon {
+            width: 55px;
+            height: 55px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            color: var(--black);
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+            font-size: 17px;
+            font-weight: 900;
+            margin-bottom: 27px;
+            box-shadow: 0 8px 25px rgba(229,193,88,.15);
+        }
+
+        .admin-login-card h2 {
+            margin: 0;
+            color: white;
+            font-size: 26px;
+            letter-spacing: -.7px;
+        }
+
+        .admin-login-card form {
+            display: grid;
+            gap: 11px;
+            margin-top: 30px;
+        }
+
+        .admin-login-card label,
+        .admin-form label {
+            color: #D5D8E0;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .admin-login-card input,
+        .admin-form input,
+        .admin-form select {
+            width: 100%;
+            min-height: 49px;
+            padding: 12px 15px;
+            border: 1px solid #303544;
+            border-radius: 11px;
+            background: #0D1018;
+            color: white;
+            outline: none;
+            font-size: 13px;
+            transition: .2s ease;
+        }
+
+        .admin-login-card input:focus,
+        .admin-form input:focus,
+        .admin-form select:focus,
+        .admin-search-wrapper input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(229,193,88,.09);
+        }
+
+        .admin-login-card input::placeholder,
+        .admin-form input::placeholder {
+            color: #747B8B;
+        }
+
+        #loginButton {
+            width: 100%;
+            min-height: 51px;
+            margin-top: 15px;
+            border: 0;
+            border-radius: 11px;
+            color: #111;
+            background: linear-gradient(110deg, var(--gold-light), var(--gold-dark));
+            font-size: 13px;
+            font-weight: 800;
+            transition: .2s ease;
+        }
+
+        #loginButton:hover,
+        #saveContestant:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+        #loginMessage {
+            font-size: 12px;
+            color: var(--red);
+            margin-top: 12px;
+        }
+
+        .admin-login-footer {
+            border-top: 1px solid var(--border);
+            margin-top: 28px;
+            padding-top: 20px;
+            color: #777E8D;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-align: center;
+        }
+
+        /* DASHBOARD HEADER */
+
+        #dashboard {
+            display: block;
+        }
+
+        .admin-dashboard-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            padding: 10px 0 34px;
+        }
+
+        .admin-dashboard-top h2 {
+            font-size: clamp(25px, 4vw, 36px);
+            margin: 0;
+            letter-spacing: -1.2px;
+            color: white;
+        }
+
+        #logoutButton {
+            border: 1px solid rgba(241,107,117,.3);
+            background: rgba(241,107,117,.07);
+            color: #FF9299;
+            border-radius: 10px;
+            padding: 12px 19px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
+
+        #logoutButton:hover {
+            background: rgba(241,107,117,.15);
+        }
+
+        /* SECTION HEADINGS */
+
+        .admin-section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0 17px;
+        }
+
+        .admin-section-heading h3 {
+            color: white;
+            font-size: 18px;
+            margin: 0;
+            font-weight: 750;
+        }
+
+        .admin-section-heading > span {
+            color: var(--gold);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .admin-section-number {
+            border: 1px solid var(--border);
+            background: rgba(229,193,88,.06);
+            padding: 8px 12px;
+            border-radius: 9px;
+        }
+
+        /* STATISTICS */
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 17px;
+            margin-bottom: 48px;
+        }
+
+        .admin-card {
+            position: relative;
+            overflow: hidden;
+            min-width: 0;
+            background: linear-gradient(145deg, var(--surface), #10131B);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 23px 21px;
+            transition: .25s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(229,193,88,.4);
+        }
+
+        .admin-card::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            right: -40px;
+            bottom: -50px;
+            border-radius: 50%;
+            background: rgba(229,193,88,.045);
+            filter: blur(5px);
+        }
+
+        .admin-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            color: #A8ADBA;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        .admin-stat-icon {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            color: var(--gold);
+            background: rgba(229,193,88,.1);
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .admin-card h3 {
+            margin: 22px 0 7px;
+            color: white;
+            font-size: clamp(23px, 3vw, 31px);
+            letter-spacing: -1px;
+            overflow-wrap: anywhere;
+        }
+
+        .admin-card p {
+            margin: 0;
+            color: #858B9A;
+            font-size: 11px;
+        }
+
+        .revenue-card {
+            border-color: rgba(229,193,88,.32);
+            background: linear-gradient(145deg, #211D16, #12141B);
+        }
+
+        .revenue-card h3 {
+            color: var(--gold-light);
+        }
+
+        /* CONTENT SECTIONS */
+
+        .admin-content-section {
+            margin-top: 48px;
+        }
+
+        .admin-panel {
+            background: linear-gradient(145deg, #141823, #10131B);
+            border: 1px solid var(--border);
+            border-radius: 19px;
+            padding: 26px;
+            margin-bottom: 22px;
+            min-width: 0;
+        }
+
+        .admin-panel-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .admin-panel-heading h3 {
+            color: white;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .admin-panel-heading p {
+            color: var(--muted);
+            font-size: 11px;
+            margin: 7px 0 0;
+        }
+
+        /* CONTESTANT FORM */
+
+        .admin-form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 19px;
+        }
+
+        .admin-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .admin-form-group label span {
+            color: var(--gold);
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        .admin-form select {
+            color-scheme: dark;
+        }
+
+        .admin-photo-group {
+            grid-column: 1 / -1;
+        }
+
+        .admin-form input[type="file"] {
+            padding: 10px;
+            color: #A8ADBA;
+        }
+
+        .admin-form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        #saveContestant,
+        #cancelEdit {
+            min-height: 45px;
+            padding: 0 22px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            transition: .2s ease;
+        }
+
+        #saveContestant {
+            border: 0;
+            color: #111;
+            background: linear-gradient(110deg, var(--gold-light), var(--gold-dark));
+        }
+
+        #cancelEdit {
+            border: 1px solid #444B5B;
+            background: #202534;
+            color: #D5D8E0;
+        }
+
+        #cancelEdit:hover {
+            background: #2A3040;
+        }
+
+        /* INFORMATION NOTICE */
+
+        .admin-information {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            margin-bottom: 22px;
+            border: 1px solid rgba(229,193,88,.17);
+            background: rgba(229,193,88,.055);
+            border-radius: 12px;
+        }
+
+        .admin-information > span {
+            flex-shrink: 0;
+            width: 21px;
+            height: 21px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #111;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .admin-information p {
+            color: #B7BBC5;
+            font-size: 11px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* DYNAMIC CONTESTANT AND PAYMENT CONTENT */
+
+        #adminContestants,
+        #paymentsTable {
+            width: 100%;
+            min-width: 0;
+            color: #DDE0E7;
+            font-size: 12px;
+            overflow-x: auto;
+        }
+
+        #adminContestants img {
+            max-width: 65px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        #adminContestants button,
+        #paymentsTable button {
+            cursor: pointer;
+        }
+
+        #adminContestants table,
+        #paymentsTable table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        #adminContestants th,
+        #paymentsTable th {
+            padding: 14px 12px;
+            background: #1A1F2B;
+            color: var(--gold);
+            text-align: left;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            white-space: nowrap;
+        }
+
+        #adminContestants td,
+        #paymentsTable td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            color: #D1D4DC;
+            vertical-align: middle;
+        }
+
+        #adminContestants tr:hover td,
+        #paymentsTable tr:hover td {
+            background: rgba(229,193,88,.025);
+        }
+
+        /* PAYMENT SEARCH */
+
+        .admin-search-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 49px;
+            padding: 0 15px;
+            margin-bottom: 22px;
+            border: 1px solid #303544;
+            border-radius: 11px;
+            background: #0D1018;
+        }
+
+        .admin-search-wrapper > span {
+            color: var(--gold);
+            font-size: 20px;
+        }
+
+        .admin-search-wrapper input,
+        .admin-search-wrapper #paymentSearch {
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            box-shadow: none;
+            background: transparent;
+            color: white;
+            font-size: 12px;
+        }
+
+        .admin-search-wrapper input::placeholder {
+            color: #747B8B;
+        }
+
+        /* FOOTER */
+
+        .admin-dashboard-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            border-top: 1px solid var(--border);
+            margin-top: 55px;
+            padding: 23px 0 5px;
+        }
+
+        .admin-dashboard-footer p {
+            color: #747B8B;
+            font-size: 9px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .admin-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            .admin-site-header {
+                min-height: 70px;
+                padding: 10px 5%;
+            }
+
+            .admin-brand img {
+                width: 165px;
+                max-height: 52px;
+            }
+
+            .admin-header-label {
+                padding: 8px 10px;
+                font-size: 9px;
+            }
+
+            .admin-main {
+                padding: 27px 5%;
+            }
+
+            .admin-login-card {
+                padding: 28px 22px;
+            }
+
+            .admin-dashboard-top {
+                align-items: flex-start;
+            }
+
+            .admin-dashboard-top h2 {
+                font-size: 27px;
+            }
+
+            #logoutButton {
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+
+            .admin-stats {
+                gap: 11px;
+            }
+
+            .admin-card {
+                padding: 17px 14px;
+                border-radius: 14px;
+            }
+
+            .admin-card-top {
+                font-size: 9px;
+            }
+
+            .admin-card h3 {
+                font-size: 23px;
+            }
+
+            .admin-panel {
+                padding: 19px 15px;
+                border-radius: 15px;
+            }
+
+            .admin-form {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-photo-group,
+            .admin-form-actions {
+                grid-column: auto;
+            }
+
+            .admin-dashboard-footer {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-header-label {
+                font-size: 8px;
+                gap: 6px;
+            }
+
+            .admin-brand img {
+                width: 135px;
+            }
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body class="admin-page">
@@ -22,6 +750,7 @@
     <!-- ADMIN HEADER -->
 
     <header class="admin-site-header">
+
         <a href="#" class="admin-brand">
             <img
                 src="./fezoprestige-logo.png.jpg"
@@ -33,6 +762,7 @@
             <span class="admin-status-dot"></span>
             Secure Admin Access
         </div>
+
     </header>
 
 
@@ -101,14 +831,16 @@
 
                 <div>
                     <p class="admin-eyebrow">ADMINISTRATION</p>
+
                     <h2>Dashboard Overview</h2>
+
                     <p class="admin-subtitle">
                         Monitor your voting platform and manage activities.
                     </p>
                 </div>
 
                 <button type="button" id="logoutButton">
-                    <span>↗</span> Logout
+                    ↗ Logout
                 </button>
 
             </div>
@@ -117,46 +849,68 @@
             <!-- STATISTICS -->
 
             <div class="admin-section-heading">
+
                 <h3>Platform Statistics</h3>
+
                 <span>LIVE OVERVIEW</span>
+
             </div>
 
             <div class="admin-stats">
 
                 <div class="admin-card revenue-card">
+
                     <div class="admin-card-top">
                         <span>Total Revenue</span>
                         <span class="admin-stat-icon">₦</span>
                     </div>
+
                     <h3 id="totalRevenue">₦0</h3>
+
                     <p>Verified payment revenue</p>
+
                 </div>
 
+
                 <div class="admin-card">
+
                     <div class="admin-card-top">
                         <span>Total Votes</span>
                         <span class="admin-stat-icon">✓</span>
                     </div>
+
                     <h3 id="totalVotes">0</h3>
+
                     <p>Votes recorded</p>
+
                 </div>
 
+
                 <div class="admin-card">
+
                     <div class="admin-card-top">
                         <span>Contestants</span>
                         <span class="admin-stat-icon">♙</span>
                     </div>
+
                     <h3 id="totalContestants">0</h3>
+
                     <p>Registered contestants</p>
+
                 </div>
 
+
                 <div class="admin-card">
+
                     <div class="admin-card-top">
                         <span>Successful Payments</span>
                         <span class="admin-stat-icon">₦</span>
                     </div>
+
                     <h3 id="successfulPayments">0</h3>
+
                     <p>Confirmed transactions</p>
+
                 </div>
 
             </div>
@@ -167,29 +921,41 @@
             <section class="admin-content-section">
 
                 <div class="admin-section-heading">
+
                     <div>
                         <p class="admin-eyebrow">PLATFORM MANAGEMENT</p>
                         <h3>Contestant Management</h3>
                     </div>
+
                     <span class="admin-section-number">01</span>
+
                 </div>
+
+
+                <!-- ADD / EDIT CONTESTANT -->
 
                 <div class="admin-panel">
 
                     <div class="admin-panel-heading">
+
                         <div>
                             <h3 id="contestantFormTitle">
                                 Add New Contestant
                             </h3>
+
                             <p>Register or update a contestant.</p>
                         </div>
+
                     </div>
+
 
                     <form id="contestantForm" class="admin-form">
 
                         <input type="hidden" id="contestantId">
 
+
                         <div class="admin-form-group">
+
                             <label for="contestantName">
                                 Contestant Full Name
                             </label>
@@ -200,27 +966,43 @@
                                 placeholder="Enter contestant full name"
                                 required
                             >
+
                         </div>
 
+
                         <div class="admin-form-group">
+
                             <label for="contestantCategory">
                                 Award Category
                             </label>
 
                             <select id="contestantCategory" required>
+
                                 <option value="">Choose a category</option>
+
                                 <option value="KING OF FEZOTECH">KING OF FEZOTECH</option>
+
                                 <option value="QUEEN OF FEZOTECH">QUEEN OF FEZOTECH</option>
+
                                 <option value="MOST SOCIAL STAFF">MOST SOCIAL STAFF</option>
+
                                 <option value="MOST POPULAR">MOST POPULAR</option>
+
                                 <option value="MOST INFLUENTIAL">MOST INFLUENTIAL</option>
+
                                 <option value="MOST STYLISH">MOST STYLISH</option>
+
                                 <option value="MOST HANDSOME">MOST HANDSOME</option>
+
                                 <option value="MOST BEAUTIFUL">MOST BEAUTIFUL</option>
+
                             </select>
+
                         </div>
 
+
                         <div class="admin-form-group admin-photo-group">
+
                             <label for="contestantPhoto">
                                 Contestant Photo
                                 <span>Optional</span>
@@ -231,9 +1013,12 @@
                                 id="contestantPhoto"
                                 accept="image/jpeg,image/png,image/webp"
                             >
+
                         </div>
 
+
                         <div class="admin-form-actions">
+
                             <button type="submit" id="saveContestant">
                                 Add Contestant
                             </button>
@@ -245,6 +1030,7 @@
                             >
                                 Cancel Edit
                             </button>
+
                         </div>
 
                     </form>
@@ -252,25 +1038,35 @@
                 </div>
 
 
+                <!-- REGISTERED CONTESTANTS -->
+
                 <div class="admin-panel contestant-list-panel">
 
                     <div class="admin-panel-heading">
+
                         <div>
                             <h3>Registered Contestants</h3>
+
                             <p>
                                 Manage contestant visibility on the public website.
                             </p>
                         </div>
+
                     </div>
 
+
                     <div class="admin-information">
+
                         <span>i</span>
+
                         <p>
                             Use the Activate and Deactivate buttons to control
                             which contestants appear on the public voting website.
                             Deactivation does not delete votes or payment records.
                         </p>
+
                     </div>
+
 
                     <div id="adminContestants">
                         Loading...
@@ -286,23 +1082,34 @@
             <section class="admin-content-section">
 
                 <div class="admin-section-heading">
+
                     <div>
                         <p class="admin-eyebrow">TRANSACTION MONITORING</p>
                         <h3>Payment Records</h3>
                     </div>
+
                     <span class="admin-section-number">02</span>
+
                 </div>
+
 
                 <div class="admin-panel">
 
                     <div class="admin-panel-heading">
+
                         <div>
                             <h3>Transaction History</h3>
-                            <p>Search and review payment records.</p>
+
+                            <p>
+                                Search and review payment records.
+                            </p>
                         </div>
+
                     </div>
 
+
                     <div class="admin-search-wrapper">
+
                         <span>⌕</span>
 
                         <input
@@ -310,7 +1117,9 @@
                             id="paymentSearch"
                             placeholder="Search by voter name or payment reference..."
                         >
+
                     </div>
+
 
                     <div id="paymentsTable">
                         Loading payment records...
@@ -324,8 +1133,11 @@
             <!-- FOOTER -->
 
             <footer class="admin-dashboard-footer">
+
                 <p>© FEZOPRESTIGE. All rights reserved.</p>
+
                 <p>SECURE ADMINISTRATION PORTAL</p>
+
             </footer>
 
         </section>
@@ -333,7 +1145,7 @@
     </main>
 
 
-    <script src="admin.js"></script>
+    <script src="./admin.js"></script>
 
 </body>
 </html>
