@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,28 +6,111 @@
 
     <title>FEZOPRESTIGE | Official Voting Platform</title>
 
-    <meta name="description" content="Welcome to FEZOPRESTIGE. Vote for your favourite contestants and celebrate excellence.">
+    <meta name="description" content="A seamless platform for participation, recognition and meaningful decisions.">
+    <meta name="theme-color" content="#111318">
 
-    <meta name="theme-color" content="#090909">
-
+    <link rel="icon" type="image/png" href="fezoprestige-icon.png">
     <link rel="stylesheet" href="style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <header>
-        <h1>FEZOPRESTIGE</h1>
-        <p>Vote for your favourites. Celebrate excellence.</p>
+    <header class="site-header">
+        <a href="#" class="brand">
+            <img src="fezoprestige-logo.png" alt="FEZOPRESTIGE logo">
+            <div class="brand-text">
+                <h1>FEZO<span>PRESTIGE</span></h1>
+                <p>VOTE · SUPPORT · CELEBRATE</p>
+            </div>
+        </a>
+
+        <nav class="main-nav">
+            <a href="#" class="active">Home</a>
+            <a href="#how-it-works">How It Works</a>
+        </nav>
+
+        <a href="#contestants" class="header-vote-button">Cast Your Vote</a>
     </header>
 
     <main>
-        <h2>Meet Our Contestants</h2>
+        <section class="hero-section">
+            <div class="hero-content">
+                <p class="eyebrow">WELCOME TO FEZOPRESTIGE</p>
 
-        <div id="contestants">
-            Loading contestants...
-        </div>
+                <h2>Every Choice <span>Matters.</span></h2>
+
+                <p class="hero-description">
+                    A seamless platform for participation, recognition
+                    and meaningful decisions.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#contestants" class="primary-button">Cast Your Vote</a>
+                    <a href="#how-it-works" class="secondary-button">How It Works</a>
+                </div>
+
+                <div class="trust-points">
+                    <span>✓ Secure Voting</span>
+                    <span>✓ Verified Transactions</span>
+                    <span>✓ Transparent Process</span>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <div class="visual-icon">✓</div>
+                    <p>Your Voice.</p>
+                    <h3>Your Choice.</h3>
+                </div>
+            </div>
+        </section>
+
+        <section class="contestants-section" id="contestants">
+            <div class="section-heading">
+                <p class="eyebrow">MAKE YOUR CHOICE</p>
+                <h2>Meet Our Contestants</h2>
+                <p>Show your support by voting for your favourite contestant.</p>
+            </div>
+
+            <div id="contestants">
+                Loading contestants...
+            </div>
+        </section>
+
+        <section class="how-it-works-section" id="how-it-works">
+            <div class="section-heading">
+                <p class="eyebrow">A SIMPLE PROCESS</p>
+                <h2>How It Works</h2>
+                <p>Supporting your favourite contestant is simple.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card">
+                    <span>01</span>
+                    <h3>Choose a Contestant</h3>
+                    <p>Browse the contestants and select who you want to support.</p>
+                </div>
+
+                <div class="step-card">
+                    <span>02</span>
+                    <h3>Select Your Votes</h3>
+                    <p>Choose your preferred voting amount and provide the required details.</p>
+                </div>
+
+                <div class="step-card">
+                    <span>03</span>
+                    <h3>Complete Payment</h3>
+                    <p>Follow the payment instructions and wait for successful verification.</p>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <footer class="site-footer">
+        <p>© FEZOPRESTIGE. All rights reserved.</p>
+        <p>Vote · Support · Celebrate</p>
+    </footer>
 
     <script src="script.js"></script>
 
