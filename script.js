@@ -254,13 +254,26 @@ container.addEventListener("click", event => {
     document.getElementById("voteModal").style.display = "flex";
 
 });
-
 // ===================================
-// CLOSE MODAL
+// CLOSE MODAL AND RESET VOTING FORM
 // ===================================
 
 document.getElementById("closeModal").addEventListener("click", () => {
+
     modal.style.display = "none";
+
+    document.getElementById("voteForm").reset();
+
+    document.getElementById("paymentResult").innerHTML = "";
+
+    const payButton = document.getElementById("payButton");
+
+    payButton.style.display = "block";
+    payButton.disabled = false;
+    payButton.textContent = "Pay Now";
+
+    selectedContestantId = null;
+
 });
 
 // ===================================
